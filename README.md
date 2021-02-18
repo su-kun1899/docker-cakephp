@@ -1,4 +1,4 @@
-# doocker-cakephp
+# docker-cakephp
 Docker for cakephp
 
 ## Run tests (for local)
