@@ -16,14 +16,10 @@ RUN set -eux; \
 	    git libicu-dev libonig-dev libxml2-dev libzip-dev unzip; \
 	rm -rf /var/lib/apt/lists/*;
 
-# install composer
-RUN curl -s https://getcomposer.org/installer \
-      | php -- \
-        --install-dir=/usr/local/bin \
-        --filename=composer \
-        --2
-
 # install php extentions
 RUN docker-php-ext-install intl pdo_mysql zip
+
+# install composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/cake_app
