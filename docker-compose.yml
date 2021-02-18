@@ -1,0 +1,5 @@
+version: "3.3"
+services:
+  sut:
+    container_name: test_app
+    build: .
