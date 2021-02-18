@@ -12,7 +12,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 # install apt packages
 RUN set -eux; \
 	apt-get update; \
-	apt-get install -y --no-install-recommends git libicu-dev libonig-dev libxml2-dev; \
+	apt-get install -y --no-install-recommends \
+	    git libicu-dev libonig-dev libxml2-dev libzip-dev unzip; \
 	rm -rf /var/lib/apt/lists/*;
 
 # install composer
@@ -23,6 +24,6 @@ RUN curl -s https://getcomposer.org/installer \
         --2
 
 # install php extentions
-RUN docker-php-ext-install intl pdo_mysql
+RUN docker-php-ext-install intl pdo_mysql zip
 
 WORKDIR /var/www/cake_app
