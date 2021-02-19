@@ -59,6 +59,49 @@ services:
       MYSQL_PASSWORD: secret
 ```
 
+## Advanced
+
+### Start new CakePHP project
+
+The first thing to do is create your project directory.
+
+```shell
+$ mkdir my-cake-app
+$ cd my-cake-app/
+```
+
+Run create-project command via the Docker.
+
+```shell
+$ docker run -it --rm --name my-new-app -v "$PWD":/var/www/cake_app sukun1899/cakephp:4-php8 composer create-project --no-interaction --working-dir=/var/www/cake_app --prefer-dist cakephp/app:4.* .
+```
+
+### Install xdebug
+
+You can also use [xdebug](https://xdebug.org/), which is very useful debugging tool.
+
+Prepare a configuration file.
+
+```shell
+$ cat conf.d/docker-php-ext-xdebug.ini
+zend_extension=xdebug
+xdebug.mode=debug
+xdebug.client_host=host.docker.internal
+xdebug.client_port=9003
+xdebug.start_with_request=yes
+```
+
+Create a Dockerfile, and install xdebug. 
+
+```dockerfile
+FROM sukun1899/cakephp:4-php8
+
+# setup xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+COPY ./conf.d /usr/local/etc/php/conf.d
+```
+
 ## Run tests (for local)
 
 Before run tests locally, install [act](https://github.com/nektos/act).
