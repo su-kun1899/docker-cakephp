@@ -19,7 +19,7 @@ WORKDIR /var/www/cake_app
 
 Then, run the commands to build and run the Docker image:
 
-```console
+```shell
 $ docker build -t my-cake-app .
 $ docker run -p 8080:80 -it --rm --name my-running-cake-app my-cake-app
 ```
@@ -28,7 +28,7 @@ $ docker run -p 8080:80 -it --rm --name my-running-cake-app my-cake-app
 
 You can run your cakePHP application using the Docker image directly:
 
-```console
+```shell
 $ docker run -p 8080:80 --rm --name my-running-cake-app -v "$(pwd)":/var/www/cake_app sukun1899/cakephp:4-php8
 ```
 
