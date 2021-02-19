@@ -101,11 +101,3 @@ RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 COPY ./conf.d /usr/local/etc/php/conf.d
 ```
-
-## Run tests (for local)
-
-Before run tests locally, install [act](https://github.com/nektos/act).
-
-```sh
-act -j test -P ubuntu-18.04=nektos/act-environments-ubuntu:18.04
-```
