@@ -101,3 +101,58 @@ RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 COPY ./conf.d /usr/local/etc/php/conf.d
 ```
+
+### Usage in GitHub Actions
+
+If you set up like `.github/workflows/ci.yml`, it's available in [GitHub Actions](https://docs.github.com/en/actions).
+
+The following is example.
+
+```yml
+name: CakePHP App CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  testsuite:
+    runs-on: ubuntu-18.04
+    container:
+      image: sukun1899/cakephp:4-php8
+    env:
+      WORKSPACE: /var/www/cake_app
+
+    services:
+      db:
+        image: mysql:8
+        ports:
+          - "3306:3306"
+        options: --health-cmd "mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test_my_app
+
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+
+    - name: Move to workspace
+      run: |
+        mv ${GITHUB_WORKSPACE}/* ${WORKSPACE}
+
+    - name: composer install
+      run: |
+        composer install --prefer-dist -d ${WORKSPACE}
+
+    - name: Run PHPUnit
+      run: |
+        cd ${WORKSPACE}
+        vendor/bin/phpunit
+```
