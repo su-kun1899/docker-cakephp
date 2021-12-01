@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:8.1-apache
 
 # setup apache configuration
 COPY files/etc/apache2 /etc/apache2/
