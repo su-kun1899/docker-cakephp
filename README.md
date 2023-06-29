@@ -121,7 +121,7 @@ on:
 
 jobs:
   testsuite:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     container:
       image: sukun1899/cakephp:4-php8
     env:
